@@ -33,7 +33,11 @@
 		"test": "webpack --config test/webpack.config.js"
 	},
 	"dependencies": {
-		"glob": "7.1.6"
+		"axios": "0.19.2",
+		"chalk": "4.1.0",
+		"figures": "3.2.0",
+		"trample": "0.1.0",
+		"webpack-sources": "1.4.3"
 	},
 	"devDependencies": {
 		"@babel/core": "7.10.4",

@@ -79,6 +79,8 @@ module.exports = {
 		new MiniCssExtractPlugin({
 			filename: "css/[name].bundle.css"
 		}),
-		new TinyimgPlugin()
+		new TinyimgPlugin({
+			host: "tinypng.com"
+		})
 	]
 };
