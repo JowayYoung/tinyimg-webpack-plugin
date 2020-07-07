@@ -1,6 +1,6 @@
 {
 	"name": "tinyimg-webpack-plugin",
-	"version": "0.0.2",
+	"version": "0.0.1",
 	"description": "A webpack plugin for compressing image",
 	"keywords": [
 		"tinyimg-webpack-plugin",
@@ -29,7 +29,6 @@
 	"license": "MIT",
 	"scripts": {
 		"remove": "rimraf package-lock.json yarn.lock node_modules",
-		"start": "node src/index.js",
 		"test": "webpack --config test/webpack.config.js"
 	},
 	"dependencies": {

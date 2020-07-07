@@ -15,16 +15,16 @@ module.exports = class TinyimgWebpackPlugin {
 		this.opts = opts;
 	}
 	apply(compiler) {
-		const { disabled, logged } = this.opts;
 		SchemaUtils(Schema, this.opts, { name: "TinyimgWebpackPlugin" });
-		!disabled && compiler.hooks.emit.tap("TinyimgWebpackPlugin", compilation => {
+		!this.opts.disabled && compiler.hooks.emit.tap("TinyimgWebpackPlugin", compilation => {
 			const imgs = Object.keys(compilation.assets).filter(v => IMG_REGEXP.test(v));
 			if (!imgs.length) return;
-			const promises = imgs.map(v => this.compressImg(compilation.assets, v, logged));
+			const promises = imgs.map(v => this.compressImg(compilation.assets, v));
 			Promise.all(promises);
 		});
 	}
-	async compressImg(assets, path, logged = false) {
+	async compressImg(assets, path) {
+		const { logged } = this.opts;
 		try {
 			const file = assets[path].source();
 			const obj = await this.uploadImg(file);
