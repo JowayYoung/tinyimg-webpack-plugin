@@ -35,12 +35,12 @@
 const TinyimgPlugin = require("tinyimg-webpack-plugin");
 
 module.exports = {
-	plugins: [
-		new TinyimgPlugin({
-			enabled: process.env.NODE_ENV === "production",
-			logged: true
-		})
-	]
+    plugins: [
+        new TinyimgPlugin({
+            enabled: process.env.NODE_ENV === "production",
+            logged: true
+        })
+    ]
 };
 ```
 
@@ -52,12 +52,12 @@ module.exports = {
 import TinyimgPlugin from "tinyimg-webpack-plugin";
 
 export default {
-	plugins: [
-		new TinyimgPlugin({
-			enabled: process.env.NODE_ENV === "production",
-			logged: true
-		})
-	]
+    plugins: [
+        new TinyimgPlugin({
+            enabled: process.env.NODE_ENV === "production",
+            logged: true
+        })
+    ]
 };
 ```
 
