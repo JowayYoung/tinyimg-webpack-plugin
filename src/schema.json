@@ -1,0 +1,14 @@
+{
+	"type": "object",
+	"properties": {
+		"disabled": {
+			"description": "start plugin",
+			"type": "boolean"
+		},
+		"logged": {
+			"description": "print log",
+			"type": "boolean"
+		}
+	},
+	"additionalProperties": false
+}

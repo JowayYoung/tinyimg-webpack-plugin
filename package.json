@@ -33,9 +33,9 @@
 		"test": "webpack --config test/webpack.config.js"
 	},
 	"dependencies": {
-		"axios": "0.19.2",
 		"chalk": "4.1.0",
 		"figures": "3.2.0",
+		"schema-utils": "2.7.0",
 		"trample": "0.1.0",
 		"webpack-sources": "1.4.3"
 	},
@@ -49,7 +49,7 @@
 		"html-webpack-plugin": "4.3.0",
 		"mini-css-extract-plugin": "0.9.0",
 		"node-sass": "4.14.1",
-		"sass": "1.26.9",
+		"sass": "1.26.10",
 		"sass-loader": "9.0.1",
 		"style-loader": "1.2.1",
 		"url-loader": "4.1.0",
