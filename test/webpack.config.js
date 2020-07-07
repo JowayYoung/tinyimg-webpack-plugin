@@ -81,7 +81,7 @@ module.exports = {
 		}),
 		new TinyimgPlugin({
 			disabled: false,
-			logged: false
+			logged: true
 		})
 	]
 };

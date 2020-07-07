@@ -28,22 +28,22 @@ module.exports = class TinyimgWebpackPlugin {
 		try {
 			const file = assets[path].source();
 			const obj = await this.uploadImg(file);
-			const img = await this.downloadImg(obj);
+			const data = await this.downloadImg(obj.output.url);
 			const oldSize = Chalk.redBright(ByteSize(obj.input.size));
 			const newSize = Chalk.greenBright(ByteSize(obj.output.size));
 			const ratio = Chalk.blueBright(RoundNum(1 - obj.output.ratio, 2, true));
 			const msg = `${Figures.tick} 压缩[${Chalk.yellowBright(path)}]完成：原始大小${oldSize}，压缩大小${newSize}，优化比例${ratio}`;
-			assets[path] = new WebpackSources.RawSource(img);
+			assets[path] = new WebpackSources.RawSource(data);
 			logged && console.log(msg);
 			return Promise.resolve();
 		} catch (err) {
-			const msg = `${Figures.cross} 压缩[${Chalk.blueBright(path)}]失败：${Chalk.redBright(err)}`;
+			const msg = `${Figures.cross} 压缩[${Chalk.yellowBright(path)}]失败：${Chalk.redBright(err)}`;
 			logged && console.error(msg);
 			return Promise.resolve();
 		}
 	}
-	downloadImg(obj = {}) {
-		const opts = new Url.URL(obj.output.url);
+	downloadImg(url) {
+		const opts = new Url.URL(url);
 		return new Promise((resolve, reject) => {
 			const req = Https.request(opts, res => {
 				let file = "";
