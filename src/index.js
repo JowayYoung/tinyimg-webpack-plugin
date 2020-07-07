@@ -4,7 +4,7 @@ const Chalk = require("chalk");
 const Figures = require("figures");
 const SchemaUtils = require("schema-utils");
 const { ByteSize, RoundNum } = require("trample/node");
-const WebpackSources = require("webpack-sources");
+const { RawSource } = require("webpack-sources");
 
 const { IMG_REGEXP } = require("../util/getting");
 const { RandomHeader } = require("../util/setting");
@@ -33,7 +33,7 @@ module.exports = class TinyimgWebpackPlugin {
 			const newSize = Chalk.greenBright(ByteSize(obj.output.size));
 			const ratio = Chalk.blueBright(RoundNum(1 - obj.output.ratio, 2, true));
 			const msg = `${Figures.tick} 压缩[${Chalk.yellowBright(path)}]完成：原始大小${oldSize}，压缩大小${newSize}，优化比例${ratio}`;
-			assets[path] = new WebpackSources.RawSource(data);
+			assets[path] = new RawSource(data);
 			logged && console.log(msg);
 			return Promise.resolve();
 		} catch (err) {
