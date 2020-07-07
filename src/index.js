@@ -6,7 +6,7 @@ const SchemaUtils = require("schema-utils");
 const { ByteSize, RoundNum } = require("trample/node");
 const { RawSource } = require("webpack-sources");
 
-const { IMG_REGEXP } = require("../util/getting");
+const { IMG_REGEXP, PLUGIN_NAME } = require("../util/getting");
 const { RandomHeader } = require("../util/setting");
 const Schema = require("./schema");
 
@@ -15,8 +15,8 @@ module.exports = class TinyimgWebpackPlugin {
 		this.opts = opts;
 	}
 	apply(compiler) {
-		SchemaUtils(Schema, this.opts, { name: "TinyimgWebpackPlugin" });
-		this.opts.enabled && compiler.hooks.emit.tap("TinyimgWebpackPlugin", compilation => {
+		SchemaUtils(Schema, this.opts, { name: PLUGIN_NAME });
+		this.opts.enabled && compiler.hooks.emit.tap(PLUGIN_NAME, compilation => {
 			const imgs = Object.keys(compilation.assets).filter(v => IMG_REGEXP.test(v));
 			if (!imgs.length) return;
 			const promises = imgs.map(v => this.compressImg(compilation.assets, v));
