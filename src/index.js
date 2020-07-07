@@ -16,7 +16,7 @@ module.exports = class TinyimgWebpackPlugin {
 	}
 	apply(compiler) {
 		SchemaUtils(Schema, this.opts, { name: "TinyimgWebpackPlugin" });
-		!this.opts.disabled && compiler.hooks.emit.tap("TinyimgWebpackPlugin", compilation => {
+		this.opts.enabled && compiler.hooks.emit.tap("TinyimgWebpackPlugin", compilation => {
 			const imgs = Object.keys(compilation.assets).filter(v => IMG_REGEXP.test(v));
 			if (!imgs.length) return;
 			const promises = imgs.map(v => this.compressImg(compilation.assets, v));

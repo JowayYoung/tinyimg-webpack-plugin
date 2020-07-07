@@ -80,7 +80,7 @@ module.exports = {
 			filename: "css/[name].bundle.css"
 		}),
 		new TinyimgPlugin({
-			disabled: false,
+			enabled: false,
 			logged: true
 		})
 	]

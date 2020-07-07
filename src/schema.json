@@ -1,7 +1,7 @@
 {
 	"type": "object",
 	"properties": {
-		"disabled": {
+		"enabled": {
 			"description": "start plugin",
 			"type": "boolean"
 		},
