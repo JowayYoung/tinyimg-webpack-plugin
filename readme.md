@@ -18,7 +18,7 @@
 > 安装准备
 
 - 提前安装`webpack`和`webpack-cli`：`npm i webpack webpack-cli`
-- 必须基于`webpack 4.0.0`以上和`webpack-cli 3.0.0`以上
+- 必须依赖`webpack 4.0.0`以上和`webpack-cli 3.0.0`以上
 
 > 安装失败
 
