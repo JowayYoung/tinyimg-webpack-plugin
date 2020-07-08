@@ -27,6 +27,7 @@
 		"url": "https://github.com/JowayYoung/tinyimg-webpack-plugin"
 	},
 	"license": "MIT",
+	"main": "src/index.js",
 	"scripts": {
 		"remove": "rimraf package-lock.json yarn.lock node_modules",
 		"test": "webpack --config test/webpack.config.js"
