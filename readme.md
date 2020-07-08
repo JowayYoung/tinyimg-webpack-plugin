@@ -20,6 +20,11 @@
 - 提前安装`webpack`和`webpack-cli`：`npm i webpack webpack-cli`
 - 必须基于`webpack 4.0.0`以上和`webpack-cli 3.0.0`以上
 
+> 安装失败
+
+- 切换**NPM镜像**为淘宝镜像：`npm config set registry https://registry.npm.taobao.org/`
+- 重新安装命令执行：`npm i -g tinyimg-webpack-plugin`
+
 ### 使用
 
 配置|功能|格式|描述
@@ -60,6 +65,16 @@ export default {
     ]
 };
 ```
+
+### 记录
+
+> new RawSource()不生效
+
+**位置**：`src/index.js#L38`
+**原因**：不知何故，使用`webpack-sources`的`new RawSource()`重写文件时不生效
+**解决**：使用`Fs.writeFileSync()`暴力解决，生成新的文件覆盖原来的文件
+
+需找到`webpack-sources`的`new RawSource()`为何不生效
 
 ### 版权
 

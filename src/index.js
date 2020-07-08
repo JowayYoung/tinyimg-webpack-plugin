@@ -1,10 +1,11 @@
+const Fs = require("fs");
 const Https = require("https");
 const Url = require("url");
 const Chalk = require("chalk");
 const Figures = require("figures");
 const SchemaUtils = require("schema-utils");
 const { ByteSize, RoundNum } = require("trample/node");
-const { RawSource } = require("webpack-sources");
+// const { RawSource } = require("webpack-sources");
 
 const { IMG_REGEXP, PLUGIN_NAME } = require("../util/getting");
 const { RandomHeader } = require("../util/setting");
@@ -32,8 +33,10 @@ module.exports = class TinyimgWebpackPlugin {
 			const oldSize = Chalk.redBright(ByteSize(obj.input.size));
 			const newSize = Chalk.greenBright(ByteSize(obj.output.size));
 			const ratio = Chalk.blueBright(RoundNum(1 - obj.output.ratio, 2, true));
+			const dpath = assets[path].existsAt;
 			const msg = `${Figures.tick} 压缩[${Chalk.yellowBright(path)}]完成：原始大小${oldSize}，压缩大小${newSize}，优化比例${ratio}`;
-			assets[path] = new RawSource(data);
+			// assets[path] = new RawSource(data); // 不知何故不生效，用以下方法暴力解决
+			Fs.writeFileSync(dpath, data, "binary");
 			logged && console.log(msg);
 			return Promise.resolve();
 		} catch (err) {
