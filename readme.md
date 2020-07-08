@@ -23,7 +23,7 @@
 > 安装失败
 
 - 切换**NPM镜像**为淘宝镜像：`npm config set registry https://registry.npm.taobao.org/`
-- 重新安装命令执行：`npm i tinyimg-webpack-plugin`
+- 重新执行安装命令：`npm i tinyimg-webpack-plugin`
 
 ### 使用
 
