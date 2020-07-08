@@ -70,9 +70,9 @@ export default {
 
 > new RawSource()不生效
 
-**位置**：`src/index.js#L38`
-**原因**：不知何故，使用`webpack-sources`的`new RawSource()`重写文件时不生效
-**解决**：使用`Fs.writeFileSync()`暴力解决，生成新的文件覆盖原来的文件
+- **位置**：`src/index.js#L38`
+- **原因**：不知何故，使用`webpack-sources`的`new RawSource()`重写文件时不生效
+- **解决**：使用`Fs.writeFileSync()`暴力解决，生成新的文件覆盖原来的文件
 
 需找到`webpack-sources`的`new RawSource()`为何不生效
 
