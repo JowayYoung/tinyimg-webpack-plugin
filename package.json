@@ -36,7 +36,7 @@
 		"chalk": "4.1.0",
 		"figures": "3.2.0",
 		"schema-utils": "2.7.0",
-		"trample": "0.1.0",
+		"trample": "0.2.1",
 		"webpack-sources": "1.4.3"
 	},
 	"devDependencies": {
