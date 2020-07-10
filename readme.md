@@ -1,7 +1,7 @@
 # Tinyimg Webpack Plugin <img src="https://img.shields.io/badge/img--master-压缩图像的Webpack扩展器-66f.svg">
 
 [![author](https://img.shields.io/badge/author-JowayYoung-f66.svg)](https://github.com/JowayYoung/tinyimg-webpack-plugin)
-[![version](https://img.shields.io/badge/version-0.0.2-f66.svg)](https://github.com/JowayYoung/tinyimg-webpack-plugin)
+[![version](https://img.shields.io/badge/version-0.0.3-f66.svg)](https://github.com/JowayYoung/tinyimg-webpack-plugin)
 [![node](https://img.shields.io/badge/node-%3E%3D%2010.0.0-3c9.svg)](https://github.com/JowayYoung/tinyimg-webpack-plugin)
 [![npm](https://img.shields.io/badge/npm-%3E%3D%205.6.0-3c9.svg)](https://github.com/JowayYoung/tinyimg-webpack-plugin)
 [![test](https://img.shields.io/badge/test-passing-f90.svg)](https://github.com/JowayYoung/tinyimg-webpack-plugin)
@@ -65,16 +65,6 @@ export default {
     ]
 };
 ```
-
-### 记录
-
-> new RawSource()不生效
-
-- **位置**：`src/index.js#L38`
-- **原因**：不知何故，使用`webpack-sources`的`new RawSource()`重写文件时不生效
-- **解决**：使用`Fs.writeFileSync()`暴力解决，生成新的文件覆盖原来的文件
-
-需找到`webpack-sources`的`new RawSource()`为何不生效
 
 ### 版权
 

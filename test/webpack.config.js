@@ -1,4 +1,5 @@
 const Path = require("path");
+const BarPlugin = require("webpackbar");
 const CleanPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const HtmlPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -66,6 +67,7 @@ module.exports = {
 		publicPath: ""
 	},
 	plugins: [
+		new BarPlugin({ name: "Webpack Build" }),
 		new CleanPlugin({
 			cleanOnceBeforeBuildPatterns: [PATH.output],
 			dry: true
@@ -83,5 +85,6 @@ module.exports = {
 			enabled: true,
 			logged: true
 		})
-	]
+	],
+	stats: "errors-only"
 };

@@ -1,6 +1,6 @@
 {
 	"name": "tinyimg-webpack-plugin",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "A webpack plugin for compressing image",
 	"keywords": [
 		"tinyimg-webpack-plugin",
@@ -36,8 +36,7 @@
 		"chalk": "4.1.0",
 		"figures": "3.2.0",
 		"schema-utils": "2.7.0",
-		"trample": "0.2.1",
-		"webpack-sources": "1.4.3"
+		"trample": "0.2.1"
 	},
 	"devDependencies": {
 		"@babel/core": "7.10.4",
@@ -54,7 +53,8 @@
 		"style-loader": "1.2.1",
 		"url-loader": "4.1.0",
 		"webpack": "4.43.0",
-		"webpack-cli": "3.3.12"
+		"webpack-cli": "3.3.12",
+		"webpackbar": "4.0.0"
 	},
 	"peerDependencies": {
 		"webpack": ">= 4.0.0",

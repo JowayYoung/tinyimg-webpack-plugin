@@ -5,7 +5,6 @@ const Chalk = require("chalk");
 const Figures = require("figures");
 const SchemaUtils = require("schema-utils");
 const { ByteSize, RoundNum } = require("trample/node");
-// const { RawSource } = require("webpack-sources");
 
 const { IMG_REGEXP, PLUGIN_NAME } = require("../util/getting");
 const { RandomHeader } = require("../util/setting");
@@ -19,9 +18,9 @@ module.exports = class TinyimgWebpackPlugin {
 		SchemaUtils(Schema, this.opts, { name: PLUGIN_NAME });
 		this.opts.enabled && compiler.hooks.emit.tap(PLUGIN_NAME, compilation => {
 			const imgs = Object.keys(compilation.assets).filter(v => IMG_REGEXP.test(v));
-			if (!imgs.length) return;
+			if (!imgs.length) return Promise.resolve();
 			const promises = imgs.map(v => this.compressImg(compilation.assets, v));
-			Promise.all(promises);
+			return Promise.all(promises);
 		});
 	}
 	async compressImg(assets, path) {
@@ -34,13 +33,12 @@ module.exports = class TinyimgWebpackPlugin {
 			const newSize = Chalk.greenBright(ByteSize(obj.output.size));
 			const ratio = Chalk.blueBright(RoundNum(1 - obj.output.ratio, 2, true));
 			const dpath = assets[path].existsAt;
-			const msg = `${Figures.tick} 压缩[${Chalk.yellowBright(path)}]完成：原始大小${oldSize}，压缩大小${newSize}，优化比例${ratio}`;
-			// assets[path] = new RawSource(data); // 不知何故不生效，用以下方法暴力解决
+			const msg = `${Figures.tick} Compressed [${Chalk.yellowBright(path)}] completed: Old Size ${oldSize}, New Size ${newSize}, Optimization Ratio ${ratio}`;
 			Fs.writeFileSync(dpath, data, "binary");
 			logged && console.log(msg);
 			return Promise.resolve();
 		} catch (err) {
-			const msg = `${Figures.cross} 压缩[${Chalk.yellowBright(path)}]失败：${Chalk.redBright(err)}`;
+			const msg = `${Figures.cross} Compressed [${Chalk.yellowBright(path)}] failed: ${Chalk.redBright(err)}`;
 			logged && console.error(msg);
 			return Promise.resolve();
 		}
