@@ -3,6 +3,7 @@ const Https = require("https");
 const Url = require("url");
 const Chalk = require("chalk");
 const Figures = require("figures");
+const Ora = require("ora");
 const SchemaUtils = require("schema-utils");
 const { ByteSize, RoundNum } = require("trample/node");
 
@@ -15,16 +16,20 @@ module.exports = class TinyimgWebpackPlugin {
 		this.opts = opts;
 	}
 	apply(compiler) {
+		const { enabled, logged } = this.opts;
 		SchemaUtils(Schema, this.opts, { name: PLUGIN_NAME });
-		this.opts.enabled && compiler.hooks.emit.tap(PLUGIN_NAME, compilation => {
+		enabled && compiler.hooks.emit.tap(PLUGIN_NAME, compilation => {
 			const imgs = Object.keys(compilation.assets).filter(v => IMG_REGEXP.test(v));
 			if (!imgs.length) return Promise.resolve();
 			const promises = imgs.map(v => this.compressImg(compilation.assets, v));
-			return Promise.all(promises);
+			const spinner = Ora("Image is compressing......").start();
+			return Promise.all(promises).then(res => {
+				spinner.stop();
+				logged && res.forEach(v => console.log(v));
+			});
 		});
 	}
 	async compressImg(assets, path) {
-		const { logged } = this.opts;
 		try {
 			const file = assets[path].source();
 			const obj = await this.uploadImg(file);
@@ -35,12 +40,10 @@ module.exports = class TinyimgWebpackPlugin {
 			const dpath = assets[path].existsAt;
 			const msg = `${Figures.tick} Compressed [${Chalk.yellowBright(path)}] completed: Old Size ${oldSize}, New Size ${newSize}, Optimization Ratio ${ratio}`;
 			Fs.writeFileSync(dpath, data, "binary");
-			logged && console.log(msg);
-			return Promise.resolve();
+			return Promise.resolve(msg);
 		} catch (err) {
 			const msg = `${Figures.cross} Compressed [${Chalk.yellowBright(path)}] failed: ${Chalk.redBright(err)}`;
-			logged && console.error(msg);
-			return Promise.resolve();
+			return Promise.resolve(msg);
 		}
 	}
 	downloadImg(url) {
