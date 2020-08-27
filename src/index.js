@@ -6,6 +6,7 @@ const Figures = require("figures");
 const Ora = require("ora");
 const SchemaUtils = require("schema-utils");
 const { ByteSize, RoundNum } = require("trample/node");
+const { RawSource } = require("webpack-sources");
 
 const { IMG_REGEXP, PLUGIN_NAME } = require("../util/getting");
 const { RandomHeader } = require("../util/setting");
@@ -18,15 +19,18 @@ module.exports = class TinyimgWebpackPlugin {
 	apply(compiler) {
 		const { enabled, logged } = this.opts;
 		SchemaUtils(Schema, this.opts, { name: PLUGIN_NAME });
-		enabled && compiler.hooks.emit.tap(PLUGIN_NAME, compilation => {
+		enabled && compiler.hooks.emit.tapPromise(PLUGIN_NAME, compilation => {
 			const imgs = Object.keys(compilation.assets).filter(v => IMG_REGEXP.test(v));
 			if (!imgs.length) return Promise.resolve();
 			const promises = imgs.map(v => this.compressImg(compilation.assets, v));
 			const spinner = Ora("Image is compressing......").start();
-			return Promise.all(promises).then(res => {
-				spinner.stop();
-				logged && res.forEach(v => console.log(v));
-			});
+			return new Promise(resolve => {
+        Promise.all(promises).then(res => {
+          spinner.stop();
+          logged && res.forEach(v => console.log(v));
+          resolve()
+        })
+      })
 		});
 	}
 	async compressImg(assets, path) {
@@ -34,12 +38,11 @@ module.exports = class TinyimgWebpackPlugin {
 			const file = assets[path].source();
 			const obj = await this.uploadImg(file);
 			const data = await this.downloadImg(obj.output.url);
+			assets[path] = new RawSource(Buffer.alloc(data.length, data, 'binary'))
 			const oldSize = Chalk.redBright(ByteSize(obj.input.size));
 			const newSize = Chalk.greenBright(ByteSize(obj.output.size));
 			const ratio = Chalk.blueBright(RoundNum(1 - obj.output.ratio, 2, true));
-			const dpath = assets[path].existsAt;
 			const msg = `${Figures.tick} Compressed [${Chalk.yellowBright(path)}] completed: Old Size ${oldSize}, New Size ${newSize}, Optimization Ratio ${ratio}`;
-			Fs.writeFileSync(dpath, data, "binary");
 			return Promise.resolve(msg);
 		} catch (err) {
 			const msg = `${Figures.cross} Compressed [${Chalk.yellowBright(path)}] failed: ${Chalk.redBright(err)}`;
