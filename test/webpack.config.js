@@ -3,6 +3,8 @@ const BarPlugin = require("webpackbar");
 const CleanPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const HtmlPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const Fibers = require("fibers");
+const Sass = require("sass");
 
 const TinyimgPlugin = require("../src");
 
@@ -28,7 +30,11 @@ const LOADER_OPTS = {
 		name: "[name].[ext]",
 		outputPath: "img"
 	},
-	minicss: { publicPath: "../" }
+	minicss: { publicPath: "../" },
+	sass: {
+		implementation: Sass,
+		sassOptions: { fiber: Fibers }
+	}
 };
 
 module.exports = {
@@ -49,7 +55,7 @@ module.exports = {
 			use: [
 				{ loader: MiniCssExtractPlugin.loader, options: LOADER_OPTS.minicss },
 				{ loader: "css-loader", options: LOADER_OPTS.css },
-				{ loader: "sass-loader" }
+				{ loader: "sass-loader", options: LOADER_OPTS.sass }
 			]
 		}, {
 			exclude: /node_modules/,
