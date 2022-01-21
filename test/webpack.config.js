@@ -1,18 +1,19 @@
-const Path = require("path");
-const BarPlugin = require("webpackbar");
-const CleanPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
-const HtmlPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const Fibers = require("fibers");
-const Sass = require("sass");
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
+import BarPlugin from "webpackbar";
+import { CleanWebpackPlugin as CleanPlugin } from "clean-webpack-plugin";
+import HtmlPlugin from "html-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
-const TinyimgPlugin = require("../src");
+// import TinyimgPlugin from "../src/index.js";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const PATH = {
-	entryHtml: Path.join(__dirname, "src/index.html"),
-	entryIco: Path.join(__dirname, "src/IMG/favicon.ico"),
-	entryJs: Path.join(__dirname, "src/index.js"),
-	output: Path.join(__dirname, "dist")
+	entryHtml: join(__dirname, "./src/index.html"),
+	entryIco: join(__dirname, "./src/img/favicon.ico"),
+	entryJs: join(__dirname, "./src/index.js"),
+	output: join(__dirname, "./dist")
 };
 
 const LOADER_OPTS = {
@@ -24,26 +25,18 @@ const LOADER_OPTS = {
 		]
 	},
 	css: { importLoaders: 2 },
-	imgurl: {
-		esModule: false,
-		limit: 10240,
-		name: "[name].[ext]",
-		outputPath: "img"
-	},
 	minicss: { publicPath: "../" },
-	sass: {
-		implementation: Sass,
-		sassOptions: { fiber: Fibers }
-	}
+	scss: { sassOptions: { fiber: false } }
 };
 
-module.exports = {
+export default {
 	devtool: false,
 	entry: PATH.entryJs,
 	mode: "production",
 	module: {
 		rules: [{
 			exclude: /node_modules/,
+			include: /src/,
 			test: /\.css$/,
 			use: [
 				{ loader: MiniCssExtractPlugin.loader, options: LOADER_OPTS.minicss },
@@ -51,20 +44,24 @@ module.exports = {
 			]
 		}, {
 			exclude: /node_modules/,
-			test: /\.(sass|scss)$/,
+			include: /src/,
+			test: /\.scss$/,
 			use: [
 				{ loader: MiniCssExtractPlugin.loader, options: LOADER_OPTS.minicss },
 				{ loader: "css-loader", options: LOADER_OPTS.css },
-				{ loader: "sass-loader", options: LOADER_OPTS.sass }
+				{ loader: "sass-loader", options: LOADER_OPTS.scss }
 			]
 		}, {
 			exclude: /node_modules/,
+			include: /src/,
 			test: /\.js$/,
 			use: [{ loader: "babel-loader", options: LOADER_OPTS.babel }]
 		}, {
 			exclude: /node_modules/,
+			generator: { filename: "img/[name][ext]" },
+			include: /src/,
 			test: /\.(jpe?g|png)$/,
-			use: [{ loader: "url-loader", options: LOADER_OPTS.imgurl }]
+			type: "asset/resource"
 		}]
 	},
 	output: {
@@ -75,22 +72,21 @@ module.exports = {
 	plugins: [
 		new BarPlugin({ name: "Webpack Build" }),
 		new CleanPlugin({
-			cleanOnceBeforeBuildPatterns: [PATH.output],
-			dry: true
+			cleanOnceBeforeBuildPatterns: PATH.output,
+			protectionWebpackAssets: false
 		}),
 		new HtmlPlugin({
 			favicon: PATH.entryIco,
 			filename: "index.html",
-			minify: { collapseWhitespace: true, removeComments: true },
+			inject: "body",
 			template: PATH.entryHtml
 		}),
 		new MiniCssExtractPlugin({
 			filename: "css/[name].bundle.css"
-		}),
-		new TinyimgPlugin({
-			enabled: true,
-			logged: true
 		})
-	],
-	stats: "errors-only"
+		// new TinyimgPlugin({
+		// 	enabled: true,
+		// 	logged: true
+		// })
+	]
 };

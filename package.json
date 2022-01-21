@@ -1,23 +1,24 @@
 {
 	"name": "tinyimg-webpack-plugin",
-	"version": "0.0.6",
-	"description": "A webpack plugin for compressing image",
+	"version": "1.0.0",
+	"description": "A Webpack Plugin For Compressing Image",
 	"keywords": [
 		"tinyimg-webpack-plugin",
+		"tiny",
 		"tinyimg",
+		"tinyjpg",
+		"tinypng",
 		"webpack",
 		"plugin",
-		"img",
-		"image",
-		"jpg",
-		"png",
+		"minimizer",
 		"compress",
-		"tiny",
-		"tinyjpg",
-		"tinypng"
+		"image",
+		"img",
+		"jpg",
+		"png"
 	],
 	"author": {
-		"name": "Joway Young",
+		"name": "JowayYoung",
 		"phone": "18819249731",
 		"email": "young.joway@aliyun.com"
 	},
@@ -27,43 +28,40 @@
 		"url": "https://github.com/JowayYoung/tinyimg-webpack-plugin"
 	},
 	"license": "MIT",
+	"type": "module",
 	"main": "src/index.js",
 	"scripts": {
-		"remove": "rimraf package-lock.json yarn.lock node_modules",
+		"remove": "rimraf node_modules package-lock.json yarn.lock",
 		"test": "webpack --config test/webpack.config.js"
 	},
+	"engines": {
+		"node": ">=16.0.0",
+		"npm": ">=7.10.0"
+	},
 	"dependencies": {
-		"chalk": "4.1.0",
-		"figures": "3.2.0",
-		"ora": "5.1.0",
-		"schema-utils": "3.0.0",
-		"trample": "0.2.3"
+		"chalk": "5.0.0",
+		"figures": "4.0.0",
+		"ora": "6.0.1",
+		"schema-utils": "4.0.0",
+		"trample": "0.4.0"
 	},
 	"devDependencies": {
-		"@babel/core": "7.11.6",
-		"@babel/preset-env": "7.11.5",
-		"babel-loader": "8.1.0",
-		"clean-webpack-plugin": "3.0.0",
-		"css-loader": "5.0.0",
-		"fibers": "5.0.0",
-		"file-loader": "6.1.1",
-		"html-webpack-plugin": "4.5.0",
-		"mini-css-extract-plugin": "1.0.0",
-		"sass": "1.27.0",
-		"sass-loader": "10.0.3",
-		"style-loader": "2.0.0",
-		"url-loader": "4.1.1",
-		"webpack": "4.43.0",
-		"webpack-cli": "3.3.12",
-		"webpack-sources": "2.0.1",
-		"webpackbar": "4.0.0"
+		"@babel/core": "7.16.10",
+		"@babel/preset-env": "7.16.11",
+		"babel-loader": "8.2.3",
+		"clean-webpack-plugin": "4.0.0",
+		"css-loader": "6.5.1",
+		"html-webpack-plugin": "5.5.0",
+		"mini-css-extract-plugin": "2.5.2",
+		"sass": "1.49.0",
+		"sass-loader": "12.4.0",
+		"webpack": "5.66.0",
+		"webpack-cli": "4.9.1",
+		"webpack-sources": "3.2.3",
+		"webpackbar": "5.0.2"
 	},
 	"peerDependencies": {
-		"webpack": ">= 4.0.0",
-		"webpack-cli": ">= 3.0.0"
-	},
-	"engines": {
-		"node": ">= 10.0.0",
-		"npm": ">= 5.6.0"
+		"webpack": ">=5.0.0",
+		"webpack-cli": ">=4.0.0"
 	}
 }
