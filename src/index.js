@@ -5,13 +5,16 @@ import Figures from "figures";
 import Ora from "ora";
 import { validate } from "schema-utils";
 import { ByteSize, RoundNum } from "trample/dist/node.js";
-import { RawSource } from "webpack-sources";
+import Webpack from "webpack";
+import WebpackSources from "webpack-sources";
 
 import { IMG_REGEXP, OPTS_SCHEMA, PLUGIN_NAME } from "./getting.js";
 import { RandomHeader } from "./setting.js";
 
 const { blueBright, greenBright, redBright, yellowBright } = Chalk;
 const { cross, tick } = Figures;
+const { Compilation } = Webpack;
+const { RawSource } = WebpackSources;
 
 export default class TinyimgWebpackPlugin {
 	constructor(opts = {}) {
@@ -20,15 +23,24 @@ export default class TinyimgWebpackPlugin {
 	}
 	apply(compiler) {
 		const { enabled, logged } = this.opts;
-		enabled && compiler.hooks.emit.tapPromise(PLUGIN_NAME, compilation => {
-			const imgs = Object.keys(compilation.assets).filter(v => IMG_REGEXP.test(v));
-			if (!imgs.length) return Promise.resolve();
-			const spinner = Ora("📦🕐🕑🕒🕓🕔🕕🕖🕗🕘🕙🕚🕛🗳️").start();
-			const promises = imgs.map(v => this.compressImg(compilation.assets, v));
-			return Promise.all(promises).then(res => {
-				spinner.stop();
-				logged && res.forEach(v => console.log(v));
+		compiler.hooks.emit.tapPromise(PLUGIN_NAME, compilation => {
+			// [DEP_WEBPACK_COMPILATION_ASSETS]
+			// https://juejin.cn/post/6953259412651769869
+			compilation.hooks.processAssets.tap({
+				name: PLUGIN_NAME,
+				stage: Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL
+			}, assets => {
+				const imgs = Object.entries(assets).filter(v => IMG_REGEXP.test(v[0]));
+				console.log(imgs);
+				// if (!imgs.length) return Promise.resolve();
+				// const spinner = Ora("🕐🕑🕒🕓🕔🕕🕖🕗🕘🕙🕚🕛").start();
+				// const promises = imgs.map(v => this.compressImg(assets, v));
+				// return Promise.all(promises).then(res => {
+				// 	spinner.stop();
+				// 	logged && res.forEach(v => console.log(v));
+				// });
 			});
+			return Promise.resolve();
 		});
 	}
 	async compressImg(assets, path) {

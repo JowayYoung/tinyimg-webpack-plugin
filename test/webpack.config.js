@@ -5,7 +5,7 @@ import { CleanWebpackPlugin as CleanPlugin } from "clean-webpack-plugin";
 import HtmlPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
-// import TinyimgPlugin from "../src/index.js";
+import TinyimgPlugin from "../src/index.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -83,10 +83,10 @@ export default {
 		}),
 		new MiniCssExtractPlugin({
 			filename: "css/[name].bundle.css"
+		}),
+		new TinyimgPlugin({
+			enabled: true,
+			logged: true
 		})
-		// new TinyimgPlugin({
-		// 	enabled: true,
-		// 	logged: true
-		// })
 	]
 };
