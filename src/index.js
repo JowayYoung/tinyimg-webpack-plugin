@@ -18,8 +18,8 @@ export default class TinyimgWebpackPlugin {
 		validate(OPTS_SCHEMA, opts, { name: PLUGIN_NAME });
 	}
 	apply(compiler) {
-		const { enabled, logged } = this.opts;
-		enabled && compiler.hooks.thisCompilation.tap(PLUGIN_NAME, compilation => {
+		const { logged } = this.opts;
+		compiler.hooks.thisCompilation.tap(PLUGIN_NAME, compilation => {
 			const opts = {
 				name: PLUGIN_NAME,
 				stage: Compilation.PROCESS_ASSETS_STAGE_ADDITIONS

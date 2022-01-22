@@ -5,10 +5,6 @@ const IMG_REGEXP = /\.(jpe?g|png)$/;
 const OPTS_SCHEMA = {
 	additionalProperties: false,
 	properties: {
-		enabled: {
-			description: "Launch Plugin",
-			type: "boolean"
-		},
 		logged: {
 			description: "Print Log",
 			type: "boolean"

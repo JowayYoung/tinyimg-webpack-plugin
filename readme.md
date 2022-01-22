@@ -13,23 +13,29 @@
 
 ### 安装
 
-`npm i tinyimg-webpack-plugin`
+- 使用**NPM**安装：`npm i tinyimg-webpack-plugin`
+- 使用**Yarn**安装：`yarn add tinyimg-webpack-plugin`
 
 > 安装准备
 
 - 提前安装`webpack`与`webpack-cli`：`npm i webpack webpack-cli`
-- 必须依赖`webpack 5.0.0`以上与`webpack-cli 4.0.0`以上
+- 必须依赖`webpack v5`与`webpack-cli v4`
 
 > 安装失败
 
 - 切换**NPM镜像**为淘宝镜像：`npm config set registry https://registry.npm.taobao.org/`
 - 重新执行安装命令：`npm i tinyimg-webpack-plugin`
 
+> 兼容版本
+
+- ⚠️ 若需兼容`webpack v4`请安装`tinyimg-webpack-plugin@0.0.5`
+
 ### 使用
+
+⚠️ 建议只在生产环境下使用
 
 配置|功能|取值|默认|描述
 :-:|:-:|:-:|:-:|-
-`enabled`|启用插件|`Boolean`|`false`|建议只在生产环境下启用
 `logged`|打印日志|`Boolean`|`false`|打印压缩图像相关信息
 
 ```js
@@ -38,10 +44,7 @@ import TinyimgPlugin from "tinyimg-webpack-plugin";
 export default {
 	// 其他Webpack配置
 	plugins: [
-		new TinyimgPlugin({
-			enabled: process.env.NODE_ENV === "production",
-			logged: true
-		})
+		new TinyimgPlugin({ logged: true })
 	]
 };
 ```

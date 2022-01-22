@@ -84,9 +84,6 @@ export default {
 		new MiniCssExtractPlugin({
 			filename: "css/[name].bundle.css"
 		}),
-		new TinyimgPlugin({
-			enabled: true,
-			logged: true
-		})
+		new TinyimgPlugin({ logged: true })
 	]
 };
