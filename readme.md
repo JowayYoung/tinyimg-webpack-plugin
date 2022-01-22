@@ -28,7 +28,7 @@
 
 > 兼容版本
 
-- ⚠️ 若需兼容`webpack v4`请安装`tinyimg-webpack-plugin@0.0.5`
+- ⚠️ 若需兼容`webpack v4`请安装`tinyimg-webpack-plugin@0.0.6`
 
 ### 使用
 
