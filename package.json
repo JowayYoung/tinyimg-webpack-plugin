@@ -41,7 +41,6 @@
 	"dependencies": {
 		"chalk": "5.0.0",
 		"figures": "4.0.0",
-		"ora": "6.0.1",
 		"schema-utils": "4.0.0",
 		"trample": "0.4.0",
 		"webpack-sources": "3.2.3"

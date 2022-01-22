@@ -23,36 +23,29 @@ export default class TinyimgWebpackPlugin {
 	}
 	apply(compiler) {
 		const { enabled, logged } = this.opts;
-		compiler.hooks.emit.tapPromise(PLUGIN_NAME, compilation => {
-			// [DEP_WEBPACK_COMPILATION_ASSETS]
-			// https://juejin.cn/post/6953259412651769869
-			compilation.hooks.processAssets.tap({
+		enabled && compiler.hooks.thisCompilation.tap(PLUGIN_NAME, compilation => {
+			const opts = {
 				name: PLUGIN_NAME,
-				stage: Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL
-			}, assets => {
-				const imgs = Object.entries(assets).filter(v => IMG_REGEXP.test(v[0]));
-				console.log(imgs);
-				// if (!imgs.length) return Promise.resolve();
-				// const spinner = Ora("🕐🕑🕒🕓🕔🕕🕖🕗🕘🕙🕚🕛").start();
-				// const promises = imgs.map(v => this.compressImg(assets, v));
-				// return Promise.all(promises).then(res => {
-				// 	spinner.stop();
-				// 	logged && res.forEach(v => console.log(v));
-				// });
+				stage: Compilation.PROCESS_ASSETS_STAGE_ADDITIONS
+			};
+			compilation.hooks.processAssets.tapPromise(opts, assets => {
+				const imgs = Object.keys(assets).filter(v => IMG_REGEXP.test(v));
+				if (!imgs.length) return Promise.resolve();
+				const promises = imgs.map(v => this.compressImg(assets, v));
+				return Promise.all(promises).then(res => logged && res.forEach(v => console.log(v)));
 			});
-			return Promise.resolve();
 		});
 	}
-	async compressImg(assets, path) {
+	async compressImg(assets = null, path = "") {
 		try {
 			const file = assets[path].source();
 			const obj = await this.uploadImg(file);
 			const data = await this.downloadImg(obj.output.url);
-			assets[path] = new RawSource(Buffer.alloc(data.length, data, "binary"));
 			const oldSize = redBright(ByteSize(obj.input.size));
 			const newSize = greenBright(ByteSize(obj.output.size));
 			const ratio = blueBright(RoundNum(1 - obj.output.ratio, 2, true));
 			const msg = `${tick} Compressed [${yellowBright(path)}] succeeded: Old Size ${oldSize}, New Size ${newSize}, Optimization Ratio ${ratio}`;
+			assets[path] = new RawSource(Buffer.alloc(data.length, data, "binary"));
 			return Promise.resolve(msg);
 		} catch (err) {
 			const msg = `${cross} Compressed [${yellowBright(path)}] failed: ${redBright(err)}`;
