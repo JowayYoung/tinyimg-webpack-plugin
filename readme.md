@@ -1,4 +1,4 @@
-# Tinyimg Webpack Plugin <img src="https://img.shields.io/badge/img--master-压缩图像的Webpack扩展器-66f.svg">
+# Tinyimg Webpack Plugin <img src="https://img.shields.io/badge/tinyimg--webpack--plugin-压缩图像的Webpack扩展器-66f.svg">
 
 [![author](https://img.shields.io/badge/author-JowayYoung-f66.svg)](https://github.com/JowayYoung/tinyimg-webpack-plugin)
 [![version](https://img.shields.io/badge/version-0.1.0-f66.svg)](https://github.com/JowayYoung/tinyimg-webpack-plugin)
