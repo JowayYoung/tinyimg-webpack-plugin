@@ -19,6 +19,10 @@ export default class TinyimgWebpackPlugin {
 	}
 	apply(compiler) {
 		const { logged } = this.opts;
+		// DEP_WEBPACK_COMPILATION_ASSETS
+		// https://juejin.cn/post/6953259412651769869
+		// https://juejin.cn/post/7011025053013770270
+		// https://juejin.cn/post/7013995927874568206
 		compiler.hooks.thisCompilation.tap(PLUGIN_NAME, compilation => {
 			const opts = {
 				name: PLUGIN_NAME,
