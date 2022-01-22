@@ -2,19 +2,15 @@ import { request } from "https";
 import { URL } from "url";
 import Chalk from "chalk";
 import Figures from "figures";
-import Ora from "ora";
 import { validate } from "schema-utils";
 import { ByteSize, RoundNum } from "trample/dist/node.js";
 import Webpack from "webpack";
-import WebpackSources from "webpack-sources";
 
-import { IMG_REGEXP, OPTS_SCHEMA, PLUGIN_NAME } from "./getting.js";
-import { RandomHeader } from "./setting.js";
+import { IMG_REGEXP, OPTS_SCHEMA, PLUGIN_NAME, RandomHeader } from "./util.js";
 
 const { blueBright, greenBright, redBright, yellowBright } = Chalk;
 const { cross, tick } = Figures;
-const { Compilation } = Webpack;
-const { RawSource } = WebpackSources;
+const { Compilation, sources } = Webpack;
 
 export default class TinyimgWebpackPlugin {
 	constructor(opts = {}) {
@@ -32,7 +28,7 @@ export default class TinyimgWebpackPlugin {
 				const imgs = Object.keys(assets).filter(v => IMG_REGEXP.test(v));
 				if (!imgs.length) return Promise.resolve();
 				const promises = imgs.map(v => this.compressImg(assets, v));
-				return Promise.all(promises).then(res => logged && res.forEach(v => console.log(v)));
+				return Promise.all(promises).then(res => logged && res.forEach((v, i) => console.log(i < res.length - 1 ? v : `${v}\n`)));
 			});
 		});
 	}
@@ -45,7 +41,7 @@ export default class TinyimgWebpackPlugin {
 			const newSize = greenBright(ByteSize(obj.output.size));
 			const ratio = blueBright(RoundNum(1 - obj.output.ratio, 2, true));
 			const msg = `${tick} Compressed [${yellowBright(path)}] succeeded: Old Size ${oldSize}, New Size ${newSize}, Optimization Ratio ${ratio}`;
-			assets[path] = new RawSource(Buffer.alloc(data.length, data, "binary"));
+			assets[path] = new sources.RawSource(Buffer.alloc(data.length, data, "binary"));
 			return Promise.resolve(msg);
 		} catch (err) {
 			const msg = `${cross} Compressed [${yellowBright(path)}] failed: ${redBright(err)}`;

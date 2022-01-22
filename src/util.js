@@ -1,6 +1,28 @@
 import { RandomNum } from "trample/dist/node.js";
 
-import { TINYIMG_URL } from "./getting.js";
+const IMG_REGEXP = /\.(jpe?g|png)$/;
+
+const OPTS_SCHEMA = {
+	additionalProperties: false,
+	properties: {
+		enabled: {
+			description: "Launch Plugin",
+			type: "boolean"
+		},
+		logged: {
+			description: "Print Log",
+			type: "boolean"
+		}
+	},
+	type: "object"
+};
+
+const PLUGIN_NAME = "tinyimg-webpack-plugin";
+
+const TINYIMG_URL = [
+	"tinyjpg.com",
+	"tinypng.com"
+];
 
 function RandomHeader() {
 	const ip = new Array(4).fill(0).map(() => parseInt(Math.random() * 255)).join(".");
@@ -21,5 +43,9 @@ function RandomHeader() {
 }
 
 export {
+	IMG_REGEXP,
+	OPTS_SCHEMA,
+	PLUGIN_NAME,
+	TINYIMG_URL,
 	RandomHeader
 };

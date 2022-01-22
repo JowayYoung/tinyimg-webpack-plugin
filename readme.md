@@ -1,7 +1,7 @@
 # Tinyimg Webpack Plugin <img src="https://img.shields.io/badge/img--master-压缩图像的Webpack扩展器-66f.svg">
 
 [![author](https://img.shields.io/badge/author-JowayYoung-f66.svg)](https://github.com/JowayYoung/tinyimg-webpack-plugin)
-[![version](https://img.shields.io/badge/version-1.0.0-f66.svg)](https://github.com/JowayYoung/tinyimg-webpack-plugin)
+[![version](https://img.shields.io/badge/version-0.1.0-f66.svg)](https://github.com/JowayYoung/tinyimg-webpack-plugin)
 [![node](https://img.shields.io/badge/node-%3E%3D16.0.0-3c9.svg)](https://github.com/JowayYoung/tinyimg-webpack-plugin)
 [![npm](https://img.shields.io/badge/npm-%3E%3D7.10.0-3c9.svg)](https://github.com/JowayYoung/tinyimg-webpack-plugin)
 [![test](https://img.shields.io/badge/test-passing-f90.svg)](https://github.com/JowayYoung/tinyimg-webpack-plugin)
@@ -9,7 +9,7 @@
 [![coverage](https://img.shields.io/badge/coverage-100%25-09f.svg)](https://github.com/JowayYoung/tinyimg-webpack-plugin)
 [![license](https://img.shields.io/badge/license-MIT-09f.svg)](https://github.com/JowayYoung/tinyimg-webpack-plugin)
 
-> `tinyimg-webpack-plugin`是一个压缩图像的Webpack扩展器，提供**JPG**和**PNG**的压缩功能
+> `tinyimg-webpack-plugin`是一个压缩图像的Webpack扩展器，提供**JPG**与**PNG**的压缩功能
 
 ### 安装
 
@@ -17,8 +17,8 @@
 
 > 安装准备
 
-- 提前安装`webpack`和`webpack-cli`：`npm i webpack webpack-cli`
-- 必须依赖`webpack 5.0.0`以上和`webpack-cli 4.0.0`以上
+- 提前安装`webpack`与`webpack-cli`：`npm i webpack webpack-cli`
+- 必须依赖`webpack 5.0.0`以上与`webpack-cli 4.0.0`以上
 
 > 安装失败
 
